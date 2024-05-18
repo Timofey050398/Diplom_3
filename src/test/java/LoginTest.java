@@ -26,7 +26,7 @@ public class LoginTest {
 
     @Before
     public void setUp(){
-        driver = Browser.SELECT_DRIVER();
+        driver = Browser.selectDriver();
         RestAssured.baseURI = ApiConstants.BASE_URL;
         UserCreate.sendPostUserCreate(user);
     }

@@ -6,37 +6,37 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 public class Browser {
     //Определитель браузера
-    private static String DRIVER_SWITCHER = System.getProperty("browser", "chrome");
-    public static final WebDriver RETURN_CHROME_DRIVER() {
+    private static final String DRIVER_SWITCHER = System.getProperty("browser", "chrome");
+    public static WebDriver returnChromeDriver() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         WebDriver driver = new ChromeDriver(options);
         return driver;
     }
-    public static final WebDriver RETURN_YANDEX_DRIVER() {
+    public static WebDriver returnYandexDriver() {
         ChromeOptions options = new ChromeOptions();
         System.setProperty("webdriver.chrome.driver","C:/Users/Timofey/WebDriver/bin/yandexdriver.exe");
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         WebDriver driver = new ChromeDriver(options);
         return driver;
     }
-    public static final WebDriver RETURN_FIREFOX_DRIVER() {
+    public static WebDriver returnFireFoxDriver() {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         WebDriver driver = new FirefoxDriver(options);
         return driver;
     }
-    public static WebDriver SELECT_DRIVER() {
+    public static WebDriver selectDriver() {
         WebDriver driver;
         switch (DRIVER_SWITCHER.toLowerCase()) {
             case "chrome":
-                driver = Browser.RETURN_CHROME_DRIVER();
+                driver = Browser.returnChromeDriver();
                 break;
             case "yandex":
-                driver = Browser.RETURN_YANDEX_DRIVER();
+                driver = Browser.returnYandexDriver();
                 break;
             case "firefox":
-                driver = Browser.RETURN_FIREFOX_DRIVER();
+                driver = Browser.returnFireFoxDriver();
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported driver type: " + DRIVER_SWITCHER);

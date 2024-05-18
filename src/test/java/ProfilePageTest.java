@@ -29,7 +29,7 @@ public class ProfilePageTest {
 
     @Before
     public void setUp(){
-        driver = Browser.SELECT_DRIVER();
+        driver = Browser.selectDriver();
         RestAssured.baseURI = ApiConstants.BASE_URL;
         UserCreate.sendPostUserCreate(user);
         driver.get(StellarburgersUrls.STELLARBURGERS_MAIN_PAGE_URL+StellarburgersUrls.STELLARBURGERS_LOGIN);

@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import pageobjects.ConstructorPageStellarBurgers;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class ConstructorTabsTest {
     private WebDriver driver;
     private final int tabNumber;
-    private List<String> tabNames = new ArrayList<>(Arrays.asList("Булки", "Соусы", "Начинки"));
+    private final List<String> tabNames = new ArrayList<>(Arrays.asList("Булки", "Соусы", "Начинки"));
 
     public ConstructorTabsTest(int tabNumber){
         this.tabNumber = tabNumber;
@@ -32,23 +33,24 @@ public class ConstructorTabsTest {
     @Test
     @DisplayName("Проверить переходы по табам")
     public void moveTab(){
-        String tab = tabNames.get(tabNumber);
-        driver = Browser.SELECT_DRIVER();
-        driver.get(StellarburgersUrls.STELLARBURGERS_MAIN_PAGE_URL);
-        ConstructorPageStellarBurgers mainPage = new ConstructorPageStellarBurgers(driver);
-        mainPage.waitPageVisibility();
-        if(tab.equals(tabNames.get(0))) {
-            mainPage.tabClick(tabNames.get(2));
-        }
-        mainPage.tabClick(tab);
+        driver = Browser.selectDriver();
         try {
-            Thread.sleep(1000); // Ожидание секунду, пока скролл не изменит координаты
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            String tab = tabNames.get(tabNumber);
+            driver.get(StellarburgersUrls.STELLARBURGERS_MAIN_PAGE_URL);
+            ConstructorPageStellarBurgers mainPage = new ConstructorPageStellarBurgers(driver);
+            mainPage.waitPageVisibility();
+            if (tab.equals(tabNames.get(0))) {
+                mainPage.tabClick(tabNames.get(2));
+            }
+            mainPage.tabClick(tab);
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+            assertTrue(mainPage.ingredientTabIsChosen(tab));
+            assertTrue(mainPage.isTabHeaderMain(tab));
+            assertTrue(mainPage.areElementsDisplayed(tab));
+        }finally {
+            if (driver != null) {
+                driver.quit();
+            }
         }
-        assertTrue(mainPage.ingredientTabIsChosen(tab));
-        assertTrue(mainPage.isTabHeaderMain(tab));
-        assertTrue(mainPage.areElementsDisplayed(tab));
-        driver.quit();
     }
 }

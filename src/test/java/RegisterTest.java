@@ -25,7 +25,7 @@ public class RegisterTest {
 
     @Before
     public void setUp(){
-        driver = Browser.SELECT_DRIVER();
+        driver = Browser.selectDriver();
         driver.get(StellarburgersUrls.STELLARBURGERS_MAIN_PAGE_URL+StellarburgersUrls.STELLARBURGERS_REGISTER);
         RestAssured.baseURI = ApiConstants.BASE_URL;
     }
